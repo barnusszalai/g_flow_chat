@@ -119,7 +119,7 @@ const ChatBotScreen = () => {
         // Reset input field
         setInputMessage('');
     
-        const apiUrl = 'http://localhost:8000/core-api/generate/'; // API endpoint
+        const apiUrl = 'https://8aeb-94-8-160-40.ngrok-free.app/core-api/generate/'; // API endpoint
         const formData = new FormData();
         formData.append('message', inputMessage); // Append the user's message
     
