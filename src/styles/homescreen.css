@@ -1,0 +1,379 @@
+
+.chatbot-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.sidebar {
+    width: 250px;
+    border-right: 1px solid #474747; /* Adjusted for dark theme */
+    padding: 20px;
+    background-color: #333333; /* Dark grey background */
+    display: flex;
+    flex-direction: column;
+    color: #ffffff; /* Light text for contrast */
+}
+
+.sidebar-button {
+    color: white;
+    padding: 10px 15px;
+    border: 2px solid white; /* White border */
+    background-color: transparent; /* No background */
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-bottom: 50px; /* Adjusted margin */
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+.sidebar-button i {
+    margin-right: 5px; /* Space between icon and text */
+}
+
+/* Hover effect for buttons */
+.sidebar-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background on hover for visibility */
+    opacity: 1; /* Full opacity on hover */
+}
+
+.sidebar-logo {
+    font-size: 24px; /* Large font size for prominence */
+    color: #e1f5fe; /* A fresh, modern color that matches your button color */
+    font-weight: bold; /* Bold text for impact */
+    text-align: center; /* Centering the logo in the sidebar */
+    margin-bottom: 20px; /* Spacing below the logo */
+    padding: 10px 0; /* Padding for better spacing */
+    font-family: 'Arial', sans-serif; /* Modern, clean font */
+    letter-spacing: 1px; /* Slightly spaced out letters */
+    text-transform: uppercase; /* Uppercase for a more structured look */
+    background-color: #333333; /* Background color matching the sidebar */
+    border-radius: 5px; /* Rounded corners for a softer look */
+}
+
+/* Add a subtle shadow for depth (optional) */
+.sidebar-logo {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.submenu-heading {
+    color: #cccccc; /* Lighter grey text for headings */
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.submenu-item {
+    background-color: #474747; /* Slightly lighter grey than sidebar */
+    color: #ffffff; /* White text for readability */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #474747;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    overflow: hidden;
+}
+
+.document-item-name {
+    white-space: nowrap; /* Prevents the text from wrapping to a new line */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis to overflowed text */
+    max-width: 80%; /* Adjust as needed */
+    margin-right: 10px; /* Space before the delete button */
+}
+
+.submenu-item:hover {
+    background-color: #565656; /* Lighter grey on hover */
+}
+
+.chat-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+
+.messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Default alignment */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
+.message {
+    max-width: 500px;
+    word-break: break-word; /* Ensures text wraps */
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.sidebar, .chat-container, .submenu-heading, .submenu-item, .sidebar-button, .message {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    font-weight: 400; /* Lighter font weight */
+    font-size: 14px;
+}
+
+.sidebar-logo {
+    font-size: 24px;
+    font-weight: 500; /* Slightly bolder for the logo */
+}
+
+.workspace-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #474747;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.delete-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.workspace-item.selected {
+    background-color: #565656; /* Different background for selected workspace */
+}
+
+.delete-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* If you want to make texts thinner, adjust font-weight accordingly */
+.message, .submenu-item {
+    font-weight: 400; /* Lighter for messages and menu items */
+}
+
+.message.user {
+    background-color: #f0f0f0;
+    align-self: flex-end; /* Align user messages to the right */
+}
+
+.message.bot {
+    background-color: #e1f5fe;
+    align-self: flex-start; /* Align bot messages to the left */
+    
+}
+
+.message h3 {
+    margin-top: 0;
+    color: #333;
+    font-weight: bold;
+}
+
+.loading-message {
+    color: #4caf50; /* Choose a theme color */
+    font-style: italic;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+.error-message {
+    color: #e53935; /* Error color, like red */
+    font-style: italic;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+.message ul {
+    list-style: none; /* Remove default list-style */
+    padding-left: 0; /* Removes default padding */
+    margin-left: 0; /* Adjusts for any default margin */
+}
+
+.message li {
+    
+    align-items: center;
+    color: #666;
+    margin-bottom: 5px;
+    line-height: 1.5;
+    position: relative; /* Needed for the pseudo-element positioning */
+    padding-left: 20px; /* Provide space for the custom bullet */
+}
+
+.message.bot.title {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #333; /* Darker color for titles */
+}
+
+.message.bot.content {
+    /* Indentation handled by inline styles */
+    color: #666; /* Lighter color for content */
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+    position: relative;
+    height: 30px; /* Increased height */
+    margin-bottom: 20px;
+}
+
+.icon {
+    width: 12px; /* Adjust the size as needed */
+    height: 12px;
+    color: white; /* Adjust the color as needed */
+    margin-right: 5px; /* Space between icon and text */
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid #4caf50; /* Darker border color matching the send icon */
+    padding-left: 20px;
+    padding-right: 40px;
+    height: 100%; /* Adjusted to fill the container height */
+}
+
+.send-icon {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4caf50; /* Darker color as requested */
+    cursor: pointer;
+}
+
+.workspace-info {
+    display: flex;
+    justify-content: center; /* Centered horizontally */
+    align-items: center;
+    margin-top: 0px; /* Closer to the top */
+    padding: 0 10px;
+    margin-bottom: 100px;
+}
+
+.current-workspace {
+    font-size: 14px;
+    color: #333333; /* Darker color for contrast */
+    margin-right: 20px; /* Spacing between workspace info and use case selector */
+}
+
+.use-case-selector {
+    position: relative;
+}
+
+.use-case-button {
+    padding: 10px 40px;
+    border: 2px solid #333333; /* Darker border */
+    background-color: transparent;
+    color: #333333; /* Darker text color */
+    cursor: pointer;
+    border-radius: 5px;
+    border-color: #4caf50;
+}
+
+.use-case-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff; /* White background */
+    border: 1px solid #333333;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+    width: 100%;
+}
+
+.use-case-dropdown div {
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #333333; /* Darker text for readability */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.use-case-dropdown div:hover {
+    background-color: #f0f0f0; /* Light grey for hover */
+}
+
+.llm-model-selector {
+    position: relative;
+    margin-left: 10px; /* Spacing from the use case selector */
+}
+
+.llm-model-button {
+    padding: 10px 40px;
+    border: 2px solid #4caf50; /* Consistent with the use case button */
+    background-color: transparent;
+    color: #333333;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.llm-model-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+    width: 100%;
+}
+
+.llm-model-dropdown div {
+    padding: 5px 10px;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #333333;
+}
+
+.llm-model-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+
+.llm-model-button, .use-case-button {
+    padding: 10px 40px;
+    border: 2px solid #333333; /* Default black border */
+    background-color: transparent;
+    color: #333333;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.llm-model-button.selected, .use-case-button.selected {
+    border-color: #4caf50; /* Green border when selected */
+}
+
+
+
+/* Add more custom styles as needed */
