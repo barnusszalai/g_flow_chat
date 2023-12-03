@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const ChatBotScreen = () => {
 
-    const documentTypes = ["Purchase Agreement", "Title Report"];
+    const documentTypes = ["Purchase Agreement"];
 
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
