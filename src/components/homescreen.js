@@ -4,6 +4,9 @@ import '../styles/homescreen.css';
 import axios from 'axios';
 
 const ChatBotScreen = () => {
+
+    const documentTypes = ["Purchase Agreement", "Title Report"];
+
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
 
@@ -18,26 +21,66 @@ const ChatBotScreen = () => {
     const [selectedLLMModel, setSelectedLLMModel] = useState('GPT-4');
     const [isLLMDropdownVisible, setIsLLMDropdownVisible] = useState(false);
 
+    const [isUploadPromptVisible, setIsUploadPromptVisible] = useState(false);
+    const [selectedDocumentType, setSelectedDocumentType] = useState('');
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDocumentTypeDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleDocumentTypeSelect = (type) => {
+        setSelectedDocumentType(type);
+        setIsDropdownOpen(false);
+    };
+
+
+
     useEffect(() => {
         scrollToBottom();
     }, [workspaces]); // Dependency array includes the workspaces, which updates when messages change
+
+    const DocumentTypeDropdown = () => {
+        return (
+            <div className="document-type-selector">
+                <div className="document-type-button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                    {selectedDocumentType || 'Select document type'}
+                </div>
+                {isDropdownOpen && (
+                    <div className="document-type-menu">
+                        {documentTypes.map((type, index) => (
+                            <div 
+                                key={index} 
+                                className="document-type-item" 
+                                onClick={() => handleDocumentTypeSelect(type)}
+                            >
+                                {type}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     const handleAddDocument = () => {
         const newDocument = { id: Date.now(), name: `Document ${documents.length + 1}` };
         setDocuments([...documents, newDocument]);
     };
 
-    const handleFileUpload = (event) => {
+    const handleFileUpload = (event, type) => {
         const file = event.target.files[0];
         if (file) {
-            const newDocument = {
-                id: Date.now(),
-                name: file.name,
-                file: file // Storing the actual file object
-            };
-            setDocuments([...documents, newDocument]);
+          const newDocument = {
+            id: Date.now(),
+            name: file.name,
+            file: file,
+            type: type
+          };
+          setDocuments([...documents, newDocument]);
         }
-    };
+      };
 
     const handleDeleteDocument = (documentId) => {
         setDocuments(documents.filter(doc => doc.id !== documentId));
@@ -119,7 +162,7 @@ const ChatBotScreen = () => {
         // Reset input field
         setInputMessage('');
     
-        const apiUrl = 'https://8aeb-94-8-160-40.ngrok-free.app/core-api/generate/'; // API endpoint
+        const apiUrl = 'https://v1o174690h.execute-api.us-west-2.amazonaws.com/core-api/generate/'; // API endpoint
         const formData = new FormData();
         formData.append('message', inputMessage); // Append the user's message
     
@@ -246,17 +289,40 @@ const ChatBotScreen = () => {
                     <FaPlus className="icon" /> New Workspace
                 </button>
                 
-                <div className="submenu-heading">Uploaded Documents</div>
-                {documents.map(doc => (
-                    <div key={doc.id} className="document-item">
-                        <span className="document-item-name">{doc.name}</span>
-                        <button className="delete-button" onClick={() => handleDeleteDocument(doc.id)}>
-                            <FaTrash className="delete-icon" />
-                        </button>
+                {documents.length > 0 && (
+                    <div>
+                        <div className="submenu-heading">Uploaded Documents</div>
+                        {documentTypes.map((type) => {
+                            // Filter documents of the current type
+                            const filteredDocs = documents.filter(doc => doc.type === type);
+
+                            // Only render the section if there are items in filteredDocs
+                            return filteredDocs.length > 0 && (
+                                <div key={type}>
+                                    <div className="document-type-heading">{type}</div>
+                                    {filteredDocs.map(doc => (
+                                        <div key={doc.id} className="document-item">
+                                            <span className="document-item-name">{doc.name}</span>
+                                            <button className="delete-button" onClick={() => handleDeleteDocument(doc.id)}>
+                                                <FaTrash className="delete-icon" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            );
+                        })}
                     </div>
-                ))}
-                <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleFileUpload} />
-                <button className="sidebar-button add-document" onClick={() => document.getElementById('file-upload').click()}>
+                )}
+
+                <div>
+                    <DocumentTypeDropdown />
+                    <input type="file" id="file-upload" style={{ display: "none" }} onChange={(e) => handleFileUpload(e, selectedDocumentType)} />
+                </div>
+                <button 
+                    className="sidebar-button add-document" 
+                    onClick={() => document.getElementById('file-upload').click()}
+                    disabled={!selectedDocumentType} // Disable button if no document type is selected
+                >
                     <FaPlus className="icon" /> Add Document
                 </button>
             </div>
@@ -273,7 +339,7 @@ const ChatBotScreen = () => {
                             {isDropdownVisible && (
                                 <div className="use-case-dropdown">
                                     <div onClick={() => { handleUseCaseChange('Financial Analysis'); setIsDropdownVisible(false); }}>Financial Analysis</div>
-                                    <div onClick={() => { handleUseCaseChange('Report Writing'); setIsDropdownVisible(false); }}>Report Writing</div>
+                                    {/* <div onClick={() => { handleUseCaseChange('Report Writing'); setIsDropdownVisible(false); }}>Report Writing</div> */}
                                 </div>
                             )}
                         </div>

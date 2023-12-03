@@ -31,6 +31,23 @@
     transition: all 0.3s;
 }
 
+.add-document:disabled {
+    background-color: #703838; /* Original color for disabled state */
+    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+    opacity: 0.7; /* Slightly transparent to indicate it's disabled */
+}
+
+.add-document:not(:disabled) {
+    background-color: #84281e; /* Stronger red color for enabled state */
+    cursor: pointer;
+    opacity: 1; /* Full opacity for enabled state */
+}
+
+.add-document {
+    margin-top: 5px;
+    /* Other existing styles... */
+}
+
 .sidebar-button i {
     margin-right: 5px; /* Space between icon and text */
 }
@@ -39,6 +56,10 @@
 .sidebar-button:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Slight background on hover for visibility */
     opacity: 1; /* Full opacity on hover */
+}
+
+.add-document:hover {
+    background-color: #983227; /* Slightly lighter red on hover, adjust as needed */
 }
 
 .sidebar-logo {
@@ -54,6 +75,57 @@
     background-color: #333333; /* Background color matching the sidebar */
     border-radius: 5px; /* Rounded corners for a softer look */
 }
+
+.document-type-selector {
+    /* position: relative; */
+}
+
+.document-type-button {
+    /* Styles similar to your .document-type-dropdown */
+    padding: 8px 20px;
+    border: 2px solid white;
+    background-color: transparent;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-top: 30px;
+    justify-content: center;
+    text-align: center;
+    /* Add more styles as needed */
+}
+
+.document-type-menu {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Matching the button style */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    z-index: 1000; /* To ensure it appears above other content */
+}
+
+.document-type-item {
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.document-type-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+.upload-label {
+    display: block;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 
 /* Add a subtle shadow for depth (optional) */
 .sidebar-logo {
@@ -87,6 +159,57 @@
     color: white;
     overflow: hidden;
 }
+
+.document-type-dropdown {
+    width: 100%; /* Full width */
+    padding: 15px 20px; /* Comfortable padding */
+    border: 2px solid white; /* White border like sidebar-button */
+    background-color: transparent; /* Transparent background */
+    border-radius: 5px; /* Same border-radius as sidebar-button */
+    color: white; /* Text color white to match the style */
+    font-size: 16px; /* Slightly larger font for readability */
+    margin-bottom: 20px; /* Consistent margin */
+    cursor: pointer; /* Pointer cursor for dropdown */
+    transition: all 0.3s; /* Smooth transition for interactions */
+    appearance: none; /* Remove default styling */
+    position: relative; /* Required for custom arrow positioning */
+    -webkit-appearance: none; /* Removes default Chrome styling */
+    -moz-appearance: none; /* Removes default Firefox styling */
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px 15px;
+}
+
+/* Hover and focus styles */
+.document-type-dropdown:hover,
+.document-type-dropdown:focus {
+    border-color: #e0e0e0; /* Lighter border color for hover/focus */
+    opacity: 1; /* Full opacity on hover/focus */
+    outline: none; /* Remove default focus outline */
+}
+
+/* Style to add a pseudo-element for custom arrow if you don't use a background-image */
+.document-type-dropdown::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    padding: 3px;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(45deg);
+    /* Adjust these properties as needed to match the arrow size and angle */
+}
+
+  
+  .document-type-heading {
+    color: lightgrey;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 12px;
+  }  
 
 .document-item-name {
     white-space: nowrap; /* Prevents the text from wrapping to a new line */
