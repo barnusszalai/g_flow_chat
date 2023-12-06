@@ -1,5 +1,4 @@
-import ChatBotScreen from './components/homescreen';
-
+import ChatBotScreen from "./components/ChatBotScreen";
 
 function App() {
   return (

@@ -77,25 +77,26 @@
 }
 
 .document-type-selector {
-    /* position: relative; */
+    margin-top: 30px;
+    margin-left: 5px;
 }
 
 .document-type-button {
-    /* Styles similar to your .document-type-dropdown */
+    width: 80%;
     padding: 8px 20px;
     border: 2px solid white;
     background-color: transparent;
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    margin-top: 30px;
-    justify-content: center;
-    text-align: center;
-    /* Add more styles as needed */
+    text-align: center; /* Center text horizontally */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
 }
 
 .document-type-menu {
-    width: 100%;
+    width: 97.5%;
     background: rgba(0, 0, 0, 0.7); /* Matching the button style */
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
@@ -271,7 +272,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: #474747;
-    padding: 10px;
+    padding: 5px 15px;
     margin-bottom: 10px;
     border-radius: 5px;
     color: white;
@@ -392,111 +393,3 @@ input[type="text"] {
     color: #4caf50; /* Darker color as requested */
     cursor: pointer;
 }
-
-.workspace-info {
-    display: flex;
-    justify-content: center; /* Centered horizontally */
-    align-items: center;
-    margin-top: 0px; /* Closer to the top */
-    padding: 0 10px;
-    margin-bottom: 100px;
-}
-
-.current-workspace {
-    font-size: 14px;
-    color: #333333; /* Darker color for contrast */
-    margin-right: 20px; /* Spacing between workspace info and use case selector */
-}
-
-.use-case-selector {
-    position: relative;
-}
-
-.use-case-button {
-    padding: 10px 40px;
-    border: 2px solid #333333; /* Darker border */
-    background-color: transparent;
-    color: #333333; /* Darker text color */
-    cursor: pointer;
-    border-radius: 5px;
-    border-color: #4caf50;
-}
-
-.use-case-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff; /* White background */
-    border: 1px solid #333333;
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 1;
-    width: 100%;
-}
-
-.use-case-dropdown div {
-    padding: 5px 10px;
-    cursor: pointer;
-    color: #333333; /* Darker text for readability */
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.use-case-dropdown div:hover {
-    background-color: #f0f0f0; /* Light grey for hover */
-}
-
-.llm-model-selector {
-    position: relative;
-    margin-left: 10px; /* Spacing from the use case selector */
-}
-
-.llm-model-button {
-    padding: 10px 40px;
-    border: 2px solid #4caf50; /* Consistent with the use case button */
-    background-color: transparent;
-    color: #333333;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.llm-model-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    border: 1px solid #333333;
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 1;
-    width: 100%;
-}
-
-.llm-model-dropdown div {
-    padding: 5px 10px;
-    cursor: pointer;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    color: #333333;
-}
-
-.llm-model-dropdown div:hover {
-    background-color: #f0f0f0;
-}
-
-.llm-model-button, .use-case-button {
-    padding: 10px 40px;
-    border: 2px solid #333333; /* Default black border */
-    background-color: transparent;
-    color: #333333;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.llm-model-button.selected, .use-case-button.selected {
-    border-color: #4caf50; /* Green border when selected */
-}
-
-
-
-/* Add more custom styles as needed */
