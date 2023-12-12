@@ -249,9 +249,9 @@
 }
 
 .message {
-    max-width: 500px;
+    max-width: 80%;
     word-break: break-word; /* Ensures text wraps */
-    margin: 5px 0;
+    margin: 20px 0;
     padding: 10px;
     border-radius: 10px;
 }
@@ -302,12 +302,12 @@
 .message.user {
     background-color: #f0f0f0;
     align-self: flex-end; /* Align user messages to the right */
+    max-width: 40%;
 }
 
 .message.bot {
     background-color: #e1f5fe;
     align-self: flex-start; /* Align bot messages to the left */
-    
 }
 
 .message h3 {
@@ -393,3 +393,47 @@ input[type="text"] {
     color: #4caf50; /* Darker color as requested */
     cursor: pointer;
 }
+
+.table-response {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the start (left) */
+    flex-wrap: wrap; /* Allow items to wrap onto a new line */
+  }
+
+  .download-excel-button {
+    margin-top: 10px;
+    background-color: transparent; /* Transparent background */
+    color: #800020; /* Set text color to a modern blue (adjust as needed) */
+    border: 2px solid #800020; /* Add a border for a modern look */
+    border-radius: 5px; /* Add rounded corners for a modern look */
+    padding: 8px 15px; /* Adjust padding for a smaller size */
+    font-size: 14px; /* Adjust font size for a smaller size */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add a smooth transition effect */
+  }
+
+  .download-excel-button:hover {
+    background-color: #800020; /* Change background color on hover */
+    color: #ffffff; /* Change text color on hover */
+  }
+  
+  .drop-zone-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px; /* Adjust the margin as needed */
+  }
+  
+  .drop-zone {
+    border: 2px dashed #aaa;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .drop-zone p {
+    margin: 0;
+  }
+
+  

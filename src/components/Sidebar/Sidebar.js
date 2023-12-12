@@ -2,7 +2,31 @@ import React from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import '../../styles/homescreen.css';
 
-const Sidebar = ({ workspaces, selectedWorkspaceId, handleWorkspaceSelect, handleDeleteWorkspace, handleAddWorkspace, documents, documentTypes, handleDeleteDocument, DocumentTypeDropdown, handleFileUpload, selectedDocumentType }) => {
+const Sidebar = ({ workspaces, selectedWorkspaceId, handleWorkspaceSelect, handleDeleteWorkspace, handleAddWorkspace, documents, documentTypes, DocumentTypeDropdown, setDocuments, selectedDocumentType }) => {
+    
+    const handleFileUpload = (event, type) => {
+        const files = event.target.files;
+        const newDocuments = [];
+
+        if (files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const newDocument = {
+                    id: Date.now() + i,
+                    name: file.name,
+                    file: file,
+                    type: type
+                };
+                newDocuments.push(newDocument);
+            }
+            setDocuments([...documents, ...newDocuments]);
+        }
+    };
+
+    const handleDeleteDocument = (documentId) => {
+        setDocuments(documents.filter(doc => doc.id !== documentId));
+    };
+
     return (
         <div className="sidebar">
             <div className="sidebar-logo">G-Flow</div>
@@ -43,10 +67,18 @@ const Sidebar = ({ workspaces, selectedWorkspaceId, handleWorkspaceSelect, handl
 
             <div>
                 <DocumentTypeDropdown />
-                <input type="file" id="file-upload" style={{ display: "none" }} onChange={(e) => handleFileUpload(e, selectedDocumentType)} />
+                <input
+                    type="file"
+                    id="file-upload"
+                    style={{ display: "none" }}
+                    onChange={(e) => handleFileUpload(e, selectedDocumentType)}
+                    multiple  // Allow selecting multiple files
+                    directory=""  // Allow selecting directories (folders)
+                    webkitdirectory=""  // For WebKit browsers
+                />
             </div>
-            <button 
-                className="sidebar-button add-document" 
+            <button
+                className="sidebar-button add-document"
                 onClick={() => document.getElementById('file-upload').click()}
                 disabled={!selectedDocumentType}
             >

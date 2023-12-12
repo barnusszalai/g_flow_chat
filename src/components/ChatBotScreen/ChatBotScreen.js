@@ -14,21 +14,20 @@ const ChatBotScreen = () => {
     const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
     const [documents, setDocuments] = useState([]);
     const [selectedUseCase, setSelectedUseCase] = useState('Financial Analysis');
-    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [selectedLLMModel, setSelectedLLMModel] = useState('GPT-4');
-    const [isLLMDropdownVisible, setIsLLMDropdownVisible] = useState(false);
-    const [isUploadPromptVisible, setIsUploadPromptVisible] = useState(false);
     const [selectedDocumentType, setSelectedDocumentType] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const [isTableView, setIsTableView] = useState(true);
+    const toggleTableView = () => {
+        setIsTableView(!isTableView);
+        console.log(isTableView);
+    };
 
     useEffect(() => {
         const messagesContainer = document.querySelector('.messages');
         scrollToBottom(messagesContainer);
     }, [workspaces]);
-
-    const toggleDocumentTypeDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
 
     const handleDocumentTypeSelect = (type) => {
         setSelectedDocumentType(type);
@@ -56,28 +55,6 @@ const ChatBotScreen = () => {
                 )}
             </div>
         );
-    };
-
-    const handleAddDocument = () => {
-        const newDocument = { id: Date.now(), name: `Document ${documents.length + 1}` };
-        setDocuments([...documents, newDocument]);
-    };
-
-    const handleFileUpload = (event, type) => {
-        const file = event.target.files[0];
-        if (file) {
-          const newDocument = {
-            id: Date.now(),
-            name: file.name,
-            file: file,
-            type: type
-          };
-          setDocuments([...documents, newDocument]);
-        }
-      };
-
-    const handleDeleteDocument = (documentId) => {
-        setDocuments(documents.filter(doc => doc.id !== documentId));
     };
 
     const handleAddWorkspace = () => {
@@ -155,15 +132,6 @@ const ChatBotScreen = () => {
             return workspace;
         }));
     };
-    
-    const removeMessageFromWorkspace = (workspaceId, message) => {
-        setWorkspaces(prevWorkspaces => prevWorkspaces.map(workspace => {
-            if (workspace.id === workspaceId) {
-                return { ...workspace, messages: workspace.messages.filter(msg => msg !== message) };
-            }
-            return workspace;
-        }));
-    };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -186,8 +154,12 @@ const ChatBotScreen = () => {
             const botResponseData = await sendMessage(inputMessage, documents);
 
             removeSpecificTemporaryMessage(selectedWorkspaceId, loadingMessage);
-            const formattedResponse = formatResponse(botResponseData.data);
-            addMessageToWorkspace(selectedWorkspaceId, { html: formattedResponse, sender: 'bot' });
+            if(!isTableView) {
+                const formattedResponse = formatResponse(botResponseData.data);
+                addMessageToWorkspace(selectedWorkspaceId, { html: formattedResponse, sender: 'bot' });
+            } else {
+                addMessageToWorkspace(selectedWorkspaceId, { table: botResponseData.data, sender: 'bot' });
+            }
         } catch (error) {
             updateTemporaryMessage(selectedWorkspaceId, '<div class="error-message">Failed to generate response.</div>', loadingMessage);
         }
@@ -195,6 +167,11 @@ const ChatBotScreen = () => {
 
     const formatResponse = (data) => {
         let formattedResponse = '';
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    
         const formatItem = (item) => {
             if (typeof item === 'string') {
                 return `<li>${item}</li>`;
@@ -220,6 +197,8 @@ const ChatBotScreen = () => {
         return formattedResponse;
     };
     
+    
+    
 
     return (
         <div className="chatbot-container">
@@ -231,9 +210,8 @@ const ChatBotScreen = () => {
                 handleAddWorkspace={handleAddWorkspace}
                 documents={documents}
                 documentTypes={documentTypes}
-                handleDeleteDocument={handleDeleteDocument}
+                setDocuments={setDocuments}
                 DocumentTypeDropdown={DocumentTypeDropdown}
-                handleFileUpload={handleFileUpload}
                 selectedDocumentType={selectedDocumentType}
             />
             <ChatContainer
@@ -247,6 +225,8 @@ const ChatBotScreen = () => {
                 handleUseCaseChange={handleUseCaseChange}
                 selectedLLMModel={selectedLLMModel}
                 handleLLMModelChange={handleLLMModelChange}
+                isTableView={isTableView}
+                toggleTableView={toggleTableView}
             />
         </div>
     );

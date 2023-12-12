@@ -1,17 +1,44 @@
 .workspace-info {
-    background-color: #2c2c2c; /* Grey background */
+    background-color: #2c2c2c;
     color: white;
-    padding: 10px;
+    padding: 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 15px; /* Rounded corners */
+    border-radius: 15px;
     margin-bottom: 100px;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 .workspace-details {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+    width: 100%;
+}
+
+.view-switch {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.view-switch button {
+    background-color: #4a4a4a;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.view-switch button:not(:last-child) {
+    margin-right: 5px; /* Adjust the spacing between the buttons */
+}
+
+.view-switch button.active {
+    background-color: #656565;
 }
 
 .current-workspace {
@@ -19,10 +46,13 @@
     color: aliceblue;
 }
 
-.use-case-selector, .llm-model-selector {
+.use-case-selector,
+.llm-model-selector {
     margin-right: 20px;
-    position: relative; /* Positioning for dropdown */
+    position: relative;
 }
+
+
 
 button {
     background-color: #4a4a4a;
@@ -39,25 +69,28 @@ button:hover {
     background-color: #656565;
 }
 
-.use-case-dropdown, .llm-model-dropdown {
+.use-case-dropdown,
+.llm-model-dropdown {
     position: absolute;
     background-color: #2c2c2c;
     padding: 6px 0;
     border-radius: 5px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    top: 100%; /* Position below the button */
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    top: 100%;
     left: 0;
     min-width: 100%;
     z-index: 1;
 }
 
-.use-case-dropdown div, .llm-model-dropdown div {
+.use-case-dropdown div,
+.llm-model-dropdown div {
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     color: white;
 }
 
-.use-case-dropdown div:hover, .llm-model-dropdown div:hover {
+.use-case-dropdown div:hover,
+.llm-model-dropdown div:hover {
     background-color: #3d3d3d;
 }
