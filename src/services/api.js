@@ -7,6 +7,7 @@ const BASE_API_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000
 export const sendMessage = async (message, documents) => {
     try {
         const apiUrl = `${BASE_API_URL}/core-api/generate/`;
+        console.log("backend url: ", apiUrl)
         const formData = new FormData();
         formData.append('message', message);
 
