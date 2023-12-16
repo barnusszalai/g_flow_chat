@@ -142,28 +142,54 @@ const ChatBotScreen = () => {
 
     const handleSendMessage = async () => {
         if (!inputMessage.trim() || !selectedWorkspaceId) return;
-
+    
         const newMessage = { text: inputMessage, sender: 'user' };
         addMessageToWorkspace(selectedWorkspaceId, newMessage);
         setInputMessage('');
-
-        const loadingMessage = { html: '<div class="loading-message">Generating response...</div>', sender: 'bot', isTemporary: true };
-        addMessageToWorkspace(selectedWorkspaceId, loadingMessage);
-
-        try {
-            const botResponseData = await sendMessage(inputMessage, documents);
-
-            removeSpecificTemporaryMessage(selectedWorkspaceId, loadingMessage);
-            if(!isTableView) {
-                const formattedResponse = formatResponse(botResponseData.data);
-                addMessageToWorkspace(selectedWorkspaceId, { html: formattedResponse, sender: 'bot' });
-            } else {
-                addMessageToWorkspace(selectedWorkspaceId, { table: botResponseData.data, sender: 'bot' });
+    
+        let retryCount = 0;
+        const maxRetries = 3;
+    
+        const sendBotMessage = async () => {
+            const loadingMessage = {
+                html: `<div class="loading-message">Generating response${retryCount > 0 ? `, retry ${retryCount}/${maxRetries}` : ''}...</div>`,
+                sender: 'bot',
+                isTemporary: true,
+            };
+            addMessageToWorkspace(selectedWorkspaceId, loadingMessage);
+    
+            try {
+                const botResponseData = await sendMessage(inputMessage, documents);
+    
+                removeSpecificTemporaryMessage(selectedWorkspaceId, loadingMessage);
+                if (!isTableView) {
+                    const formattedResponse = formatResponse(botResponseData.data);
+                    addMessageToWorkspace(selectedWorkspaceId, { html: formattedResponse, sender: 'bot' });
+                } else {
+                    addMessageToWorkspace(selectedWorkspaceId, { table: botResponseData.data, sender: 'bot' });
+                }
+            } catch (error) {
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    updateTemporaryMessage(
+                        selectedWorkspaceId,
+                        `<div class="loading-message">Retrying (${retryCount}/${maxRetries})...</div>`,
+                        loadingMessage
+                    );
+                    await sendBotMessage();
+                } else {
+                    updateTemporaryMessage(
+                        selectedWorkspaceId,
+                        '<div class="error-message">Failed to generate response after multiple retries.</div>',
+                        loadingMessage
+                    );
+                }
             }
-        } catch (error) {
-            updateTemporaryMessage(selectedWorkspaceId, '<div class="error-message">Failed to generate response.</div>', loadingMessage);
-        }
+        };
+    
+        await sendBotMessage();
     };
+    
 
     const formatResponse = (data) => {
         let formattedResponse = '';
