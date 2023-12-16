@@ -31,9 +31,14 @@ const Table = ({ data }) => {
     const tableCells = [];
     for (const key in rowData) {
       const value = rowData[key];
+      const isNumber = !isNaN(Number(key));
       tableCells.push(
         <tr key={key}>
-          <TableCell style={{ paddingLeft: `${indentLevel * 20}px`, textAlign: 'center' }}>{key}</TableCell>
+           {!isNumber && (
+            <TableCell style={{ paddingLeft: `${indentLevel * 20}px`, textAlign: 'center' }}>
+                {key}
+            </TableCell>
+          )}
           {typeof value === 'object' ? (
             <TableCell>
               <Table data={[value]} />
