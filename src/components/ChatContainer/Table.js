@@ -32,6 +32,7 @@ const Table = ({ data }) => {
     for (const key in rowData) {
       const value = rowData[key];
       const isNumber = !isNaN(Number(key));
+      console.log("loading table");
       tableCells.push(
         <tr key={key}>
            {!isNumber && (
