@@ -46,6 +46,14 @@ const WorkspaceInfo = ({
                 >
                   Financial Analysis
                 </div>
+                <div
+                  onClick={() => {
+                    handleUseCaseChange('General Summary');
+                    toggleUseCaseDropdown();
+                  }}
+                >
+                  General Summary
+                </div>
               </div>
             )}
           </div>
@@ -67,12 +75,12 @@ const WorkspaceInfo = ({
             )}
           </div>
           <div className="view-switch">
-            <button onClick={toggleTableView} className={isTableView ? 'active' : ''}>
+            {/* <button onClick={toggleTableView} className={isTableView ? 'active' : ''}>
               <FaTable />
             </button>
             <button onClick={toggleTableView} className={!isTableView ? 'active' : ''}>
               <FaList />
-            </button>
+            </button> */}
           </div>
         </div>
       )}

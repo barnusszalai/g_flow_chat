@@ -13,7 +13,7 @@ const ChatBotScreen = () => {
     const [workspaces, setWorkspaces] = useState([]);
     const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
     const [documents, setDocuments] = useState([]);
-    const [selectedUseCase, setSelectedUseCase] = useState('Financial Analysis');
+    const [selectedUseCase, setSelectedUseCase] = useState('Financial Analysis', 'General Summary');
     const [selectedLLMModel, setSelectedLLMModel] = useState('GPT-4');
     const [selectedDocumentType, setSelectedDocumentType] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -159,12 +159,13 @@ const ChatBotScreen = () => {
             addMessageToWorkspace(selectedWorkspaceId, loadingMessage);
     
             try {
-                const botResponseData = await sendMessage(inputMessage, documents);
+                const botResponseData = await sendMessage(inputMessage, documents, selectedUseCase);
     
                 removeSpecificTemporaryMessage(selectedWorkspaceId, loadingMessage);
-                if (!isTableView) {
-                    const formattedResponse = formatResponse(botResponseData.data);
-                    addMessageToWorkspace(selectedWorkspaceId, { html: formattedResponse, sender: 'bot' });
+                if (selectedUseCase == 'General Summary') {
+                    console.log(botResponseData.data)
+                    //const formattedResponse = formatResponse(botResponseData.data);
+                    addMessageToWorkspace(selectedWorkspaceId, { html: botResponseData.data.response, sender: 'bot' });
                 } else {
                     addMessageToWorkspace(selectedWorkspaceId, { table: botResponseData.data, sender: 'bot' });
                 }
